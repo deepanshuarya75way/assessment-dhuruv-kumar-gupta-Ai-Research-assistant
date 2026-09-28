@@ -22,7 +22,7 @@ class RetrievalService:
             RetrievalService.tokenization(doc or "")
             for doc in documents
         ]
-        total_docs=len(toekinzed_docs)
+        total_docs=len(tokenized_docs)
         doc_length=[len(doc) for doc in tokenized_docs]
         avg_length=sum(doc_length)/total_docs
 
@@ -56,7 +56,7 @@ class RetrievalService:
 
     scores.sort(key=lambda item:item[1],reverse=True)
     return scores[::top_k]
-    
+
 
 @staticmethod
 def search(questions,paper_id,top_k=4):
