@@ -1,5 +1,5 @@
 import math
-from collection import import Counter
+from collection import Counter
 import re
 
 from app.services.embedding_service import EmbeddingService
@@ -18,20 +18,20 @@ class RetrievalService:
         if not documents or not query_tokens:
             return[]
 
-        toekinzed_docs=[
+        tokenized_docs=[
             RetrievalService.tokenization(doc or "")
             for doc in documents
         ]
         total_docs=len(toekinzed_docs)
-        doc_length=[len(doc) for doc in toekinzed_docs]
+        doc_length=[len(doc) for doc in tokenized_docs]
         avg_length=sum(doc_length)/total_docs
 
         doc_frequencies=Counter(token
-            for doc in toekinzed_docs
+            for doc in tokenized_docs
             for token in set(docs))
         score=[]
 
-        for token, tokens in enumerate(toekinzed_docs)
+        for token, tokens in enumerate(tokenized_docs)
         term_counts=Counter(tokens)
         score=0
         for term in query_token:
@@ -56,6 +56,7 @@ class RetrievalService:
 
     scores.sort(key=lambda item:item[1],reverse=True)
     return scores[::top_k]
+    
 
 @staticmethod
 def search(questions,paper_id,top_k=4):
