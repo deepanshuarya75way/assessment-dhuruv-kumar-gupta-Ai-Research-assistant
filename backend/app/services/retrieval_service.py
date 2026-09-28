@@ -13,6 +13,7 @@ class RetrievalService:
         return re.findall(r"\b\w+\b",text.lower())
     @staticmethod
     def sparse_serach(question,documents,ids,top_k=10):
+        #here we have used BM25 for sparce search 
         query_tokens=RetrievalService.tokenization(question)
         if not documents or not query_tokens:
             return[]
@@ -64,8 +65,8 @@ def search(questions,paper_id,top_k=4):
     documents=stored.get("documents")
     ids=stored.get("ids") or []
 
-    if not in collection
-
+    if not in documents
+# here we are performing dense search
         query_embedding=(EmbeddingService.create_query_embedding(question))
         candidate_k=min(len(documents),max(top_k*3,10))
 
@@ -78,8 +79,8 @@ def search(questions,paper_id,top_k=4):
 
         dense_ids=dense_results.get("ids",[[]])[0]
 
-
-        sparese_results=RetrievalService.sparse_serach(questions,documents,ids,top_k=candiate_k)
+#here we are performing sparse search
+        sparse_results=RetrievalService.sparse_serach(questions,documents,ids,top_k=candiate_k)
 
         rrf_scores={}
         rank_constant=60
